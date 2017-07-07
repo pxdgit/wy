@@ -1,0 +1,133 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>{:isset($info['id'])?'编辑':'新增'}租售信息</h2>
+    </div>
+    <form action="{:U()}" method="post" enctype="multipart/form-data" class="form-horizontal" >
+        <div class="form-item">
+            <label class="item-label">发布人<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="issuer" value="{$info.issuer|default=''}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">标题<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="title" value="{$info.title}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">联系方式<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="tel" value="{$info.tel|default=''}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">价格<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-small" name="price" value="{$info.price|default=0}">
+                <select name="unit">
+                    <option value="元/月">元/月</option>
+                    <option value="万元">万元</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">类型<span class="check-tips"></span></label>
+            <div class="controls">
+                <select name="type">
+                    <!--<option value="0" >出租</option>-->
+                    <!--<option value="1" >销售</option>-->
+                    <option value="0" <eq name="info.target" value="0" >selected</eq>>出售</option>
+                    <option value="1" <eq name="info.target" value="1" >selected</eq>>销售</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">状态<span class="check-tips"></span></label>
+            <div class="controls">
+                <select name="status">
+                    <!--<option value="0" >启用</option>-->
+                    <!--<option value="1" >禁用</option>-->
+                    <option value="0" <eq name="info.status" value="0" >selected</eq>>启用</option>
+                    <option value="1" <eq name="info.status" value="1" >selected</eq>>禁用</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">截止日期<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="date" class="text input-large" name="end_time" value="{{$info.time|date='Y-m-d H:i:s',###}}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">房屋信息<span class="check-tips"></span></label>
+            <div class="controls">
+                <textarea name="content" id="info" cols="30" rows="10">
+                    {$info.content}
+                </textarea>
+
+                <script src="__STATIC__/ueditor/ueditor.config.js"></script>
+                <script src="__STATIC__/ueditor/ueditor.all.min.js"></script>
+                <script type="text/javascript" charset="utf-8">
+                    window.UEDITOR_HOME_URL = "__STATIC__/ueditor";
+                    $(document).ready(function () {
+                        UE.getEditor('info', {
+                            initialFrameHeight: 500,
+                            initialFrameWidth: 1100,
+                            serverUrl: "{:U(MODULE_NAME.'/Index/save_info')}"
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">上传图片<span class="check-tips"></span></label>
+            <div class="controls">
+                <link rel="stylesheet" type="text/css" href="__STATIC__/uploadify/uploadify.css" />
+
+                <input type="hidden" value="{$info.img}"  name="img" id="db_img"> <!--存进数据库的-->
+                <input id="upload_button" type="file" multiple="multiple" value=""/><!--上传按钮-->
+
+
+                <img src="{$info.img}" alt="" id="sale_img"><!--回显图片-->
+                <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+                <script type="text/javascript" charset="utf-8">
+                    var src=$('#sale_img').attr('src');
+
+                    $('#upload_button').uploadify({
+                        'swf'      : '__STATIC__/uploadify/uploadify.swf',
+                        'uploader' : '{:U("Sale/uploadify")} ',//这个就是处理上传文件的地址
+                        'buttonText' : '上传照片',
+                        'onUploadSuccess' : function(file, data, response) {
+                            data.trim();//这个是文件在服务器上的路径，如果是图片，可以使用src
+                            $('#sale_img').attr('src',data).show();//回显图片
+                             if(data!=null){
+                                 $('#db_img').val(data);
+                             }
+                        }
+                    });
+
+
+                </script>
+            </div>
+        </div>
+
+        <div class="form-item">
+            <input type="hidden" name="id" value="{$info.id|default=''}">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        Think.setValue("pid", {$info.pid|default = 0});
+        Think.setValue("hide", {$info.hide|default = 0});
+        Think.setValue("is_dev", {$info.is_dev|default = 0});
+        //导航高亮
+        highlight_subnav('{:U('index')}');
+    </script>
+</block>
