@@ -15,7 +15,7 @@ return array(
     /* 数据缓存设置 */
     'DATA_CACHE_PREFIX'    => 'onethink_', // 缓存前缀
     'DATA_CACHE_TYPE'      => 'File', // 数据缓存类型
-    'URL_MODEL'            => 3, //URL模式
+    'URL_MODEL'            => 3, //URL模式:可以更改U方法生成的url地址格式
 
     /* 文件上传相关配置 */
     'DOWNLOAD_UPLOAD' => array(

@@ -8,8 +8,8 @@
     <title>Bootstrap 101 Template</title>
 
     <!-- Bootstrap -->
-    <link href="./Public/Wechat/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./Public/Wechat/css/style.css" rel="stylesheet">
+    <link href="/Public/Wechat/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Public/Wechat/css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -63,8 +63,9 @@
                                     <h4>{$sale_sale.title}</h4>
                                     <p class="zushouInfo">{$sale_sale.title}</p>
                                     <p class="text-danger">{$sale_sale.price}{$sale_sale.unit}</p>
-                                    <p><a href="{:U('zdetail?id='.$sale_sale['id'])}" class="btn btn-danger zushouBtn">详细信息</a> </p>
-                                </div>
+                                    <p><a href="{:U('zdetail',array('id'=>$sale_sale['id']))}" class="btn btn-danger zushouBtn">详细信息</a> </p>
+
+                                    </div>
                             </div>
                         </div>
                         </volist>
@@ -83,7 +84,7 @@
                                     <h4>{$hire_sale.title}</h4>
                                     <p class="zushouInfo">{$hire_sale.title}</p>
                                     <p class="text-danger">{$hire_sale.price}{$hire_sale.unit}</p>
-                                    <p><a class="btn btn-danger zushouBtn" href="{:U('zdetail?id='.$hire_sale['id'])}">详细信息</a> </p>
+                                    <p><a class="btn btn-danger zushouBtn" href="{:U('zdetail',array('id'=>$sale_sale['id']))}">详细信息</a> </p>
                                 </div>
                             </div>
                         </div>
@@ -99,9 +100,8 @@
         </div>
     </div>
 </div>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="./Public/Wechat/jquery-1.11.2.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="./Public/Wechat/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/Public/Wechat/jquery-1.11.2.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/Public/Wechat/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

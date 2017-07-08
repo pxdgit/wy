@@ -8,8 +8,8 @@
     <title>Bootstrap 101 Template</title>
 
     <!-- Bootstrap -->
-    <link href="./Public/Wechat/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./Public/Wechat/css/style.css" rel="stylesheet">
+    <link href="/Public/Wechat/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Public/Wechat/css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,7 +46,7 @@
     <div class="container-fluid" >
         <volist name="list" id="notice">
             <div class="row noticeList">
-                        <a href="{:U('ndetail?id='.$notice['id'])}">
+                        <a href="{:U('ndetail',array('id'=>$notice['id']))}">
                             <div class="col-xs-2">
                                 <img class="noticeImg" src="{:get_cover($notice['cover_id'],$field=path)}" />
                             </div>
@@ -63,8 +63,8 @@
 
     </div>
 </div>
-<script src="./Public/Wechat/jquery-1.11.2.min.js"></script>
+<script src="/Public/Wechat/jquery-1.11.2.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="./Public/Wechat/bootstrap/js/bootstrap.min.js"></script>
+<script src="/Public/Wechat/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

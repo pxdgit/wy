@@ -18,8 +18,9 @@ return array(
     'HTML_FILE_SUFFIX'  =>    '.shtml', // 设置静态缓存文件后缀
     'HTML_CACHE_RULES'  =>     array(  // 定义静态缓存规则
         // 定义格式1 数组方式
-        'Index:index'   =>     array('{:module}/{:controller}_{:action}',3600),
-        'User:login'   =>     array('login',3600),
+        'Wechat:'   =>     array('{:module}/{:controller}_{:action}',3600),
+        'User:login'    =>     array('login',3600),
+        'Wechat:zdetail'=>array('{:controller}/{:action}/{id}','600'),
     ),
 
     'SHOW_PAGE_TRACE' =>true,
@@ -32,6 +33,7 @@ return array(
     /* 数据缓存设置 */
     'DATA_CACHE_PREFIX' => 'onethink_', // 缓存前缀
     'DATA_CACHE_TYPE'   => 'File', // 数据缓存类型
+    'URL_MODEL'            => 1, //URL模式:可以更改U方法生成的url地址格式
 
     /* 文件上传相关配置 */
     'DOWNLOAD_UPLOAD' => array(
