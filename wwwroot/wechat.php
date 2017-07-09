@@ -20,6 +20,11 @@ define('BIND_MODULE','Wechat');
  * 应用目录设置
  * 安全期间，建议安装调试完成后移动到非WEB目录
  */
+
+
+
+define('ROOT_PATH',dirname($_SERVER['SCRIPT_FILENAME']));
+
 define ( 'APP_PATH', './Application/' );
 define('HTML_PATH','./HTML/');
 

@@ -18,9 +18,10 @@ return array(
     'HTML_FILE_SUFFIX'  =>    '.shtml', // 设置静态缓存文件后缀
     'HTML_CACHE_RULES'  =>     array(  // 定义静态缓存规则
         // 定义格式1 数组方式
-        'Wechat:'   =>     array('{:module}/{:controller}_{:action}',3600),
+//        'Wechat:'   =>     array('{:module}/{:controller}_{:action}',3600),
         'User:login'    =>     array('login',3600),
         'Wechat:zdetail'=>array('{:controller}/{:action}/{id}','600'),
+        'Wechat:ndetail'=>array('{:controller}/{:action}/{id}','600'),
     ),
 
     'SHOW_PAGE_TRACE' =>true,

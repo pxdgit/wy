@@ -43,17 +43,17 @@
     </nav>
     <!--导航结束-->
 
-    <div class="container-fluid" >
+    <div class="container-fluid"  id="content_list">
         <volist name="list" id="notice">
-            <div class="row noticeList">
+            <div class="row noticeList" data-id="{$notice.id}">
                         <a href="{:U('ndetail',array('id'=>$notice['id']))}">
                             <div class="col-xs-2">
-                                <img class="noticeImg" src="{:get_cover($notice['cover_id'],$field=path)}" />
+                                <img class="noticeImg  view" src="{:get_cover($notice['cover_id'],$field=path)}"  />
                             </div>
                             <div class="col-xs-10">
-                                <p class="title">{$notice.title}</p>
-                                <p class="intro">{$notice.descript}</p>
-                                <p class="info">浏览: {$notice.view} <span class="pull-right">
+                                <p class="title  view">{$notice.title}</p>
+                                <p class="intro  view">{$notice.descript}</p>
+                                <p class="info view">浏览: <span id="sum">{$notice.view}</span> <span class="pull-right  view">
                                     {$notice.create_time|date="Y-m-d H:i:s",###}
                                 </span> </p>
                             </div>
@@ -62,9 +62,58 @@
         </volist>
 
     </div>
+    <div class="text-center">
+    <button type="button" class="btn btn-info ajax-page">获取更多</button>
 </div>
+</div>
+
 <script src="/Public/Wechat/jquery-1.11.2.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/Public/Wechat/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+        var url = '/wechat.php/wechat/notice';
+//        var urlview = '/wechat.php/wechat/nview.html';
+        var inner_url = '/wechat.php/wechat/ndetail/id/';
+        var start=2;
+    $('.ajax-page').click(function () {
+        $.post(url,{start:start},function (responce) {
+            if(responce.length!=0){
+                $(responce).each(function (i,v) {
+                    var html='';
+                    html += '<div class="row noticeList" data-id="'+v['id']+'">\
+                                            <a href="'+inner_url+v['id']+'">\
+                                                <div class="col-xs-2">\
+                                                    <img class="img-rounded img-responsive view" src="'+v['path']+'" />\
+                                                </div>\
+                                                <div class="col-xs-10">\
+                                                    <p class="title view">'+v['title']+'</p>\
+                                                    <p class="intro view">'+v['description']+'</p>\
+                                                    <p class="info view">浏览: <span id="sum">'+v['view']+'</span> <span class="pull-right  view">'+getLocalTime(v['create_time'])+'</span> </p>\
+                                                </div>\
+                                            </a>\
+                                        </div>';
+                    $('#content_list').append(html);
+                })
+            }else{
+                html= ' <button type="button" class="btn btn-info ">没有更多数据了哟</button>';
+                $('.ajax-page').replaceWith(html);
+            }
+        })
+        console.debug(start);
+        start=start+2;
+    });
+        function getLocalTime(time) {
+            return new Date(parseInt(time) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+        }
+        $('#content_list').on('click','.view',function () {
+            var sumnode=$(this).closest('.noticeList').find('#sum');
+            var id=$(this).closest('.noticeList').attr('data-id');
+            var sum=sumnode.text();
+            sum=parseInt(sum)+1;
+            sumnode.text(sum);
+            $.post('/wechat.php/wechat/nview',{id:id});
+        })
+
+</script>
 </body>
 </html>

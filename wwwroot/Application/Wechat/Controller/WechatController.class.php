@@ -20,6 +20,7 @@ class WechatController extends Controller
         if($this->login()){
             $this->display();
         }
+//        $this->login();
     }
     public function sale(){
         $sale=M('Sale');
@@ -45,10 +46,22 @@ class WechatController extends Controller
         $this->display('zushou-detail');
     }
     public function notice(){
-        $data = M('Document')->where(['category_id'=>40])->select();
-        $this->assign('list',$data);
-        $this->meta_title = '小区通知';
-        $this->display();
+        if(IS_GET){
+            $data = M('Document'); // 实例化User对象
+            $data = $data->where(['category_id'=>40])->order('create_time')->limit(0,2)->select();
+            $this->assign('list',$data);// 赋值数据集
+            $this->assign('page',[0,2]);// 赋值分页输出
+            $this->meta_title = '小区通知';
+            $this->display(); // 输出模板
+        }else{
+            $start=I('post.start');
+            $data = M('Document  as  d')->join('`onethink_picture` as p on d.cover_id=p.id')->where(['category_id'=>40])->order('d.create_time')->limit($start,2)->select();
+            $this->ajaxReturn($data);
+        }
+    }
+    public function nview(){
+        $id=I('post.id');
+        M('Document')->where(["id"=>$id])->setInc('view');
     }
     public function ndetail($id){
         $data = M('Document  as  d')->join('`onethink_document_article` as a on d.id=a.id')->join('`onethink_member`  as  m  on d.uid = m.uid')->where(['d.id'=>$id])->find();
@@ -58,6 +71,10 @@ class WechatController extends Controller
     /* 用户登录检测 */
     protected function login(){
         /* 用户登录检测 */
-        is_login() || $this->error('您还没有登录，请先登录！', U('User/login'));
+        if(is_login()){
+            return 1;
+        }else{
+            $this->error('您还没有登录，请先登录！', U('User/login'));
+        }
     }
 }
