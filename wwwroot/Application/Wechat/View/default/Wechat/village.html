@@ -44,17 +44,17 @@
     </nav>
     <!--导航结束-->
     <div class="container-fluid"  id="content_list">
-        <volist name="list" id="service">
-            <div class="row noticeList" data-id="{$service.id}">
-                <a href="{:U('sdetail',array('id'=>$service['id']))}">
+        <volist name="list" id="village">
+            <div class="row noticeList" data-id="{$village.id}">
+                <a href="{:U('videtail',array('id'=>$village['id']))}">
                     <div class="col-xs-2">
-                        <img class="noticeImg  view" src="{:get_cover($service['cover_id'],$field=path)}"  />
+                        <img class="noticeImg  view" src="{:get_cover($village['cover_id'],$field=path)}"  />
                     </div>
                     <div class="col-xs-10">
-                        <p class="title  view">{$service.title}</p>
-                        <p class="intro  view">{$service.descript}</p>
-                        <p class="info view">浏览: <span id="sum">{$service.view}</span> <span class="pull-right  view">
-                                    {$service.create_time|date="Y-m-d H:i:s",###}
+                        <p class="title  view">{$village.title}</p>
+                        <p class="intro  view">{$village.descript}</p>
+                        <p class="info view">浏览: <span id="sum">{$village.view}</span> <span class="pull-right  view">
+                                    {$village.create_time|date="Y-m-d H:i:s",###}
                                 </span> </p>
                     </div>
                 </a>
@@ -72,8 +72,8 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/Public/Wechat/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-    var url = '/wechat.php/wechat/service';
-    var inner_url = '/wechat.php/wechat/sdetail/id/';
+    var url = '/wechat.php/wechat/village';
+    var inner_url = '/wechat.php/wechat/videtail/id/';
     var start=2;
     $('.ajax-page').click(function () {
         $.post(url,{start:start},function (responce) {
@@ -111,7 +111,7 @@
         var sum=sumnode.text();
         sum=parseInt(sum)+1;
         sumnode.text(sum);
-        $.post('/wechat.php/wechat/sview',{id:id});
+        $.post('/wechat.php/wechat/spview',{id:id});
     })
 
 </script>
