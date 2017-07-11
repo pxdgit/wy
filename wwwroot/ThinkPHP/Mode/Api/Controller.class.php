@@ -15,6 +15,7 @@ namespace Think;
  */
 abstract class Controller
 {
+    protected $app;
 
     /**
      * 架构函数

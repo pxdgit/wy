@@ -75,9 +75,7 @@ class SaleController extends AdminController
             $this->error('删除失败！');
         }
     }
-    public function toogleHide(){
 
-    }
 
 
     public function uploadify(){
@@ -102,5 +100,8 @@ class SaleController extends AdminController
                 echo trim(substr($fileArray,1));
             }
         }
+    }
+    public function aa(){
+        $this->display('add');
     }
 }

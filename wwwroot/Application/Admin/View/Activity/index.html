@@ -1,9 +1,4 @@
 <extend name="Public/base"/>
-<block name="sidebar">
-    <include file="sidemenu" />
-</block>
-
-
 <block name="body">
     <div class="main-title">
         <h2><present name="data">[ {$data.title} ] 子</present>小区活动管理 </h2>
@@ -53,7 +48,7 @@
                         <td>{$act[0].nickname}</td>
                         <td>{$act.title}</td>
                         <td>{$act.description}</td>
-                        <td>{$act.sign_time|date='Y-m-d H:i:s',###}</td>
+                        <td>{$act[3]|date='Y-m-d H:i:s',###}</td>
                         <td>{$act.deadline|date='Y-m-d H:i:s',###}</td>
                         <td>
                             <a href="javascript:;" id="allow" data-id="{$act[1].id}">{:$act[2]['status']?'通过':'不通过'}</a>
@@ -95,8 +90,10 @@
            if(act==1){
                $(this).closest('tr').find('td:eq(7)').text($(this).text());
                $(this).remove();
-           }else{
+           }
+           else{
                $(this).closest('tr').remove();
+               $(this).closest('tr').hide();
            }
         })
     </script>

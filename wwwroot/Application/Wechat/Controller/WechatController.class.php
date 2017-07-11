@@ -20,7 +20,6 @@ class WechatController extends Controller
         if($this->login()){
             $this->display();
         }
-//        $this->login();
     }
     public function sale(){
         $sale=M('Sale');
@@ -164,19 +163,81 @@ class WechatController extends Controller
             if($data){
                 $this->ajaxReturn('signed');
             }else{
-               $data['act_id']=$id;
-               $data['uid']=$uid;
-               $data['sign_time']=time();
-               M('Actsign')->add($data);
-               $this->ajaxReturn('success');
+               $model=M('Document')->where(['id'=>$id])->find();
+                $time=$model['deadline'];
+                if($time<time()){
+                    $this->ajaxReturn($time);
+                }else{
+                    $data['act_id']=$id;
+                    $data['uid']=$uid;
+                    $data['sign_time']=time();
+                    M('Actsign')->add($data);
+                    $this->ajaxReturn('success'.time());
+                }
             }
         }else{
             $this->ajaxReturn('false');
         }
     }
-    /* 用户登录检测 */
+//在线报修
+    public function verify(){
+                $verify = new \Think\Verify();
+                $verify->entry(1);
+    }
+    public function repair(){
+        if($this->login()){
+            if(IS_POST){
+                $Model=D('Repair');
+                if(!check_verify(I('post.verify'))){
+                    $this->error('验证码输入错误！');
+                    return;
+                }
+                $data=$Model->create();
+                $data['sn']='re_'.uniqid();
+                if($data){
+                    $id=$Model->add($data);
+                    if($id){
+                        $this->success('新增成功');
+                    }else{
+                        $this->error('新增失败');
+                    }
+                } else {
+                    $this->error($Model->getError());
+                }
+            }else{
+                $this->display('repair');
+            }
+        }
+    }
+    public function myrepair(){
+        if(IS_GET){
+            $data = M('Repair'); // 实例化User对象
+            $data = $data->order('create_time')->limit(0,2)->select();
+            $this->assign('list',$data);// 赋值数据集
+            $this->assign('page',[0,2]);// 赋值分页输出
+            $this->display(); // 输出模板
+        }else{
+            $start=I('post.start');
+            $data = M('Repair')->order('create_time')->limit($start,2)->select();
+            $this->ajaxReturn($data);
+        }
+    }
+    public function repdetail($id){
+        if(IS_POST){
+            $comment=I('post.comment');
+            $id=I('post.id');
+            $re=M('Repair')-> where(['id'=>$id])->setField('comment',$comment);
+            if($re){
+                $this->success('修改成功', 'repdetail/id/'.$id.'.html');
+            }
+        }else{
+            $data=M('Repair')->where(['id'=>$id])->find();
+            $this->assign('list',$data);
+            $this->display('repair_detail');
+        }
+    }
+//用户登录检测
     protected function login(){
-        /* 用户登录检测 */
         if(is_login()){
             return 1;
         }else{

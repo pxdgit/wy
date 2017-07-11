@@ -1,0 +1,40 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>{:isset($info['id'])?'编辑':'新增'}报修信息</h2>
+    </div>
+    <form action="{:U()}" method="post" enctype="multipart/form-data" class="form-horizontal" >
+        <div class="form-item">
+            <label class="item-label">报修人<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="name" >
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">标题<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="title" >
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">联系方式<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="tel">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">地址<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="tel">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">详细情况<span class="check-tips"></span></label>
+            <div class="controls">
+                <textarea name="content" id="" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+        <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+    </form>
+</block>

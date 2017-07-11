@@ -69,7 +69,9 @@
                 alert('您已参与过该活动');
             }else if(responce=='success'){
                 alert('报名成功');
-            }else{
+            }else if(responce=='overtime'){
+                alert('该活动已结束');
+            } else{
                 if(confirm('您还未登录账号，请先前往登录')){
                     window.location.href='/wechat.php/User/login';
                 }

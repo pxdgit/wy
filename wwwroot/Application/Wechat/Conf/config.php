@@ -24,7 +24,7 @@ return array(
         'Wechat:ndetail'=>array('{:controller}/{:action}/{id}','600'),
     ),
 
-    'SHOW_PAGE_TRACE' =>true,
+    'SHOW_PAGE_TRACE' =>false,
     // 预先加载的标签库
     'TAGLIB_PRE_LOAD'     =>    'OT\\TagLib\\Article,OT\\TagLib\\Think',
         
@@ -108,4 +108,15 @@ return array(
         'callback' => false, //检测文件是否存在回调函数，如果存在返回文件信息数组
     ), //附件上传配置（文件上传类配置）
 
+    'WX_CONFIG'=>array(
+        'debug'  => true,
+        'app_id' => 'wxee66b44dd891e157',
+        'secret' => 'cc001899a8861a3f19abc84d4d7ea65c',
+        'token'  => 'qwert',
+        // 'aes_key' => null, // 可选
+        'log' => [
+            'level' => 'debug',
+            'file'  => ROOT_PATH.'/tmp/easywechat.log', // XXX: 绝对路径！！！！
+        ],
+    )
 );
